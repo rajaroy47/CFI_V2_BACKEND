@@ -115,4 +115,4 @@ serviceSchema.index({
 
 const serviceModel = mongoose.model("Service", serviceSchema);
  
-module.exports = serviceModel
+module.exports = serviceModel;
