@@ -98,9 +98,6 @@ const serviceSchema = new mongoose.Schema({
 
 
 serviceSchema.index({
-    slug: 1
-})
-serviceSchema.index({
     category: 1
 })
 serviceSchema.index({

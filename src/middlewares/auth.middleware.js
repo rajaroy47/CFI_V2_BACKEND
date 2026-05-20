@@ -1,37 +1,70 @@
-const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
+// ─── auth.middleware.js ───────────────────────────────────────────────────────
 
+const jwt  = require("jsonwebtoken");
+const User = require("../models/user.model.js");
 
-const isLoggedIn = async function (req, res, next) {
-
-    const token = req.cookies.token;
-
-    if (!token) {
-        return res.status(401).json({
-            statusCode: 401,
-            success: false,
-            message: "Unauthorized access (token not set)",
-        });
-    }
-
+/**
+ * Verifies the Bearer access token from the Authorization header.
+ * Sets req.user = decoded JWT payload on success.
+ */
+const verifyAccessToken = async (req, res, next) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const authHeader = req.headers.authorization;
 
-        // ✅ attach user to request
-        req.user = decoded.data;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({
+                success : false,
+                message : "Unauthorized — no token provided",
+            });
+        }
+
+        const token = authHeader.split(" ")[1];
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        } catch (err) {
+            const message = err.name === "TokenExpiredError"
+                ? "Token expired — please refresh"
+                : "Invalid token";
+            return res.status(401).json({ success: false, message });
+        }
+
+        console.log(decoded)
+
+        // Optional: verify user still exists & is active (adds 1 DB call but safer)
+        const user = await User.findById(decoded._id).select("_id role accountStatus permission");
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: "User no longer exists" });
+        }
+
+        if (user.accountStatus !== "active") {
+            return res.status(403).json({
+                success : false,
+                message : `Account is ${user.accountStatus}`,
+            });
+        }
+
+        // Attach full safe user object to request
+        req.user = {
+            _id        : user._id,
+            id         : user._id.toString(),
+            role       : user.role,
+            permission : user.permission,
+        };
 
         next();
 
     } catch (error) {
-        return res.status(401).json({
-            statusCode: 401,
-            success: false,
-            message: "Invalid or expired token",
-            errorMsg: error.message
-        });
+        return res.status(500).json({ success: false, message: error.message });
     }
-}
+};
+
+// Keep isAuthenticated as an alias for backward compatibility
+const isAuthenticated = verifyAccessToken;
 
 module.exports = {
-    isLoggedIn
-}
+    verifyAccessToken,
+    isAuthenticated,
+};

@@ -112,17 +112,12 @@ const sessionSchema = new mongoose.Schema({
 
 
 sessionSchema.index({ userId: 1 });
-sessionSchema.index({ sessionId: 1 });
 sessionSchema.index({ refreshToken: 1 });
 sessionSchema.index({ isActive: 1 });
 sessionSchema.index({ isRevoked: 1 });
 sessionSchema.index({ expiresAt: 1 });
 sessionSchema.index({ createdAt: -1 });
 
-sessionSchema.index(
-  { expiresAt: 1 },
-  { expireAfterSeconds: 0 }
-);
 
 const sessionModel = mongoose.model("Session", sessionSchema);
 

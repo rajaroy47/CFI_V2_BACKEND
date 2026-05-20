@@ -138,7 +138,7 @@ serviceApplicationSchema.index({
     priority: 1
 })
 
-
 const serviceApplicationModel = mongoose.model("ServiceApplication", serviceApplicationSchema);
  
 module.exports = serviceApplicationModel;
+
