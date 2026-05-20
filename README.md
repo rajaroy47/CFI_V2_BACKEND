@@ -1,40 +1,44 @@
+````md
+# 📁 Backend Folder Structure Explanation
+
+```bash
 server/
 │
 ├── src/
 │   │
-│   ├── app.js
-│   ├── server.js
+│   ├── app.js                     # Express app configuration
+│   ├── server.js                  # Server entry point
 │   │
-│   ├── config/
-│   │   ├── db.js
-│   │   ├── env.js
-│   │   ├── cloudinary.js
-│   │   ├── razorpay.js
-│   │   ├── socket.js
-│   │   ├── mail.js
-│   │   └── logger.js
+│   ├── config/                    # Global configuration files
+│   │   ├── db.js                  # MongoDB connection setup
+│   │   ├── env.js                 # Environment variable config
+│   │   ├── cloudinary.js          # Cloudinary configuration
+│   │   ├── razorpay.js            # Razorpay payment setup
+│   │   ├── socket.js              # Socket.io configuration
+│   │   ├── mail.js                # Nodemailer/email config
+│   │   └── logger.js              # Logger configuration
 │   │
-│   ├── modules/
+│   ├── modules/                   # Feature-based modules
 │   │   │
-│   │   ├── auth/
-│   │   │   ├── auth.controller.js
-│   │   │   ├── auth.service.js
-│   │   │   ├── auth.repository.js
-│   │   │   ├── auth.routes.js
-│   │   │   ├── auth.validation.js
-│   │   │   ├── auth.middleware.js
-│   │   │   └── auth.utils.js
+│   │   ├── auth/                  # Authentication module
+│   │   │   ├── auth.controller.js # Handles auth requests/responses
+│   │   │   ├── auth.service.js    # Auth business logic
+│   │   │   ├── auth.repository.js # Database queries
+│   │   │   ├── auth.routes.js     # Auth API routes
+│   │   │   ├── auth.validation.js # Validation schemas
+│   │   │   ├── auth.middleware.js # Auth-specific middleware
+│   │   │   └── auth.utils.js      # Helper functions
 │   │   │
-│   │   ├── users/
-│   │   │   ├── user.model.js
-│   │   │   ├── user.controller.js
-│   │   │   ├── user.service.js
-│   │   │   ├── user.repository.js
-│   │   │   ├── user.routes.js
-│   │   │   ├── user.validation.js
-│   │   │   └── user.constants.js
+│   │   ├── users/                 # User module
+│   │   │   ├── user.model.js      # User schema/model
+│   │   │   ├── user.controller.js # User controller
+│   │   │   ├── user.service.js    # User business logic
+│   │   │   ├── user.repository.js # User DB queries
+│   │   │   ├── user.routes.js     # User routes
+│   │   │   ├── user.validation.js # User validation
+│   │   │   └── user.constants.js  # Constants/enums
 │   │   │
-│   │   ├── services/
+│   │   ├── services/              # Service management module
 │   │   │   ├── service.model.js
 │   │   │   ├── service.controller.js
 │   │   │   ├── service.service.js
@@ -42,7 +46,7 @@ server/
 │   │   │   ├── service.routes.js
 │   │   │   └── service.validation.js
 │   │   │
-│   │   ├── applications/
+│   │   ├── applications/          # Application handling module
 │   │   │   ├── application.model.js
 │   │   │   ├── application.controller.js
 │   │   │   ├── application.service.js
@@ -52,7 +56,7 @@ server/
 │   │   │   ├── application.pipeline.js
 │   │   │   └── application.constants.js
 │   │   │
-│   │   ├── documents/
+│   │   ├── documents/             # File/document management
 │   │   │   ├── document.model.js
 │   │   │   ├── document.controller.js
 │   │   │   ├── document.service.js
@@ -61,7 +65,7 @@ server/
 │   │   │   ├── upload.middleware.js
 │   │   │   └── document.validation.js
 │   │   │
-│   │   ├── payments/
+│   │   ├── payments/              # Payment module
 │   │   │   ├── payment.model.js
 │   │   │   ├── payment.controller.js
 │   │   │   ├── payment.service.js
@@ -70,7 +74,7 @@ server/
 │   │   │   ├── payment.webhook.js
 │   │   │   └── payment.validation.js
 │   │   │
-│   │   ├── notifications/
+│   │   ├── notifications/         # Notification module
 │   │   │   ├── notification.model.js
 │   │   │   ├── notification.controller.js
 │   │   │   ├── notification.service.js
@@ -78,7 +82,7 @@ server/
 │   │   │   ├── notification.routes.js
 │   │   │   └── notification.socket.js
 │   │   │
-│   │   ├── chats/
+│   │   ├── chats/                 # Chat system
 │   │   │   ├── chat.model.js
 │   │   │   ├── chat.controller.js
 │   │   │   ├── chat.service.js
@@ -86,7 +90,7 @@ server/
 │   │   │   ├── chat.routes.js
 │   │   │   └── chat.socket.js
 │   │   │
-│   │   ├── invoices/
+│   │   ├── invoices/              # Invoice system
 │   │   │   ├── invoice.model.js
 │   │   │   ├── invoice.controller.js
 │   │   │   ├── invoice.service.js
@@ -94,25 +98,25 @@ server/
 │   │   │   ├── invoice.routes.js
 │   │   │   └── pdf.service.js
 │   │   │
-│   │   ├── dashboard/
+│   │   ├── dashboard/             # Dashboard analytics
 │   │   │   ├── dashboard.controller.js
 │   │   │   ├── dashboard.service.js
 │   │   │   ├── dashboard.routes.js
 │   │   │   └── dashboard.pipeline.js
 │   │   │
-│   │   ├── admin/
+│   │   ├── admin/                 # Admin module
 │   │   │   ├── admin.controller.js
 │   │   │   ├── admin.service.js
 │   │   │   ├── admin.routes.js
 │   │   │   ├── admin.validation.js
 │   │   │   └── admin.pipeline.js
 │   │   │
-│   │   └── activityLogs/
+│   │   └── activityLogs/          # Activity tracking/logging
 │   │       ├── activityLog.model.js
 │   │       ├── activityLog.service.js
 │   │       └── activityLog.pipeline.js
 │   │
-│   ├── middleware/
+│   ├── middleware/                # Global middleware
 │   │   ├── auth.middleware.js
 │   │   ├── role.middleware.js
 │   │   ├── error.middleware.js
@@ -123,7 +127,7 @@ server/
 │   │   ├── audit.middleware.js
 │   │   └── csrf.middleware.js
 │   │
-│   ├── utils/
+│   ├── utils/                     # Reusable helper functions
 │   │   ├── apiResponse.js
 │   │   ├── asyncHandler.js
 │   │   ├── generateToken.js
@@ -137,52 +141,54 @@ server/
 │   │   ├── cloudinary.js
 │   │   └── constants.js
 │   │
-│   ├── validators/
+│   ├── validators/                # Centralized validators
 │   │   ├── auth.validator.js
 │   │   ├── user.validator.js
 │   │   ├── service.validator.js
 │   │   └── payment.validator.js
 │   │
-│   ├── cron/
+│   ├── cron/                      # Scheduled background jobs
 │   │   ├── reminder.cron.js
 │   │   ├── cleanup.cron.js
 │   │   ├── analytics.cron.js
 │   │   └── invoice.cron.js
 │   │
-│   ├── queues/
+│   ├── queues/                    # Queue management system
 │   │   ├── email.queue.js
 │   │   ├── notification.queue.js
 │   │   └── payment.queue.js
 │   │
-│   ├── sockets/
+│   ├── sockets/                   # Socket.io handlers
 │   │   ├── index.js
 │   │   ├── chat.socket.js
 │   │   └── notification.socket.js
 │   │
-│   ├── storage/
+│   ├── storage/                   # Local storage
 │   │   ├── temp/
 │   │   ├── documents/
 │   │   └── invoices/
 │   │
-│   ├── templates/
+│   ├── templates/                 # Templates for mails/PDFs
 │   │   ├── emails/
 │   │   ├── invoices/
 │   │   └── pdf/
 │   │
-│   ├── docs/
+│   ├── docs/                      # API documentation
 │   │   ├── swagger.json
 │   │   └── postman_collection.json
 │   │
-│   ├── tests/
+│   ├── tests/                     # Unit/integration tests
 │   │   ├── auth.test.js
 │   │   ├── user.test.js
 │   │   └── payment.test.js
 │   │
-│   └── routes/
+│   └── routes/                    # Main route handler
 │       └── index.js
 │
-├── .env
-├── .gitignore
-├── package.json
-├── README.md
-└── ecosystem.config.js
+├── .env                           # Environment variables
+├── .gitignore                     # Ignored files/folders
+├── package.json                   # Dependencies & scripts
+├── README.md                      # Project documentation
+└── ecosystem.config.js            # PM2 deployment config
+```
+````
