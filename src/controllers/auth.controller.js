@@ -5,6 +5,8 @@ const crypto = require("crypto");
 const User = require("../models/user.model.js");
 const { generateAccessToken, generateRefreshToken } = require("../utils/generateToken.js");
 
+// const { sendEmail } = require("../utils/sendEmail.js");
+
 // ─── HELPERS ────────────────────────────────────────────────────────────────
 
 const MAX_FAILED_ATTEMPTS = 5;
@@ -190,6 +192,8 @@ const loginUser = async (req, res) => {
             accessToken,
             user         : sanitizeUser(user),
         });
+
+        // sendEmail("fortestingpurpose698@gmail.com", "Login Successfull", "<h1>Login success</h1>");
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -491,6 +495,8 @@ const forgotPassword = async (req, res) => {
 
         // During development — expose token for testing
         const devPayload = process.env.NODE_ENV !== "production" ? { resetToken: rawToken } : {};
+
+        console.log("devPayload: ", devPayload);
 
         return res.status(200).json({
             success : true,
