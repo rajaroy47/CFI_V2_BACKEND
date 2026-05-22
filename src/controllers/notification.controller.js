@@ -416,7 +416,7 @@ module.exports = {
     getSingleNotification,
     updateNotification,
     markNotificationAsRead,
-    markAllNotificationsAsRead,
+    markAllNotificationsAsRead,    
     deleteNotification,
     getUnreadNotificationCount
 }

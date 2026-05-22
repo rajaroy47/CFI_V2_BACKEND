@@ -124,10 +124,6 @@ const serviceApplicationSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-
-serviceApplicationSchema.index({
-    applicationId: 1
-})
 serviceApplicationSchema.index({
     serviceId: 1
 })

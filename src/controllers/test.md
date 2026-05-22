@@ -1027,6 +1027,7 @@ const userSchema = new mongoose.Schema(
     emailVerificationExpiry: { type: Date, select: false },
     passwordResetToken: { type: String, select: false },
     passwordResetExpiry: { type: Date, select: false },
+    passwordResetOtp: { type: String, select: false },
 
     lastLogin: { type: Date },
 
@@ -1354,8 +1355,6 @@ paymentSchema.index({ status: 1, createdAt: -1 });
 
 const Payment = mongoose.model("Payment", paymentSchema);
 export default Payment;
-
-
 
 
 
@@ -2734,7 +2733,7 @@ const homepageSectionSchema = new mongoose.Schema(
 const websiteSettingSchema = new mongoose.Schema(
   {
     // ── Branding ───────────────────────────────────────────────────
-    siteName: { type: String, default: "My CA Firm" },
+    siteName: { type: String, default: "CFI V2" },
     tagline: { type: String, default: "" },
     logo: { type: String, default: "" },           // Cloudinary URL
     logoDark: { type: String, default: "" },        // dark mode variant
@@ -2742,14 +2741,14 @@ const websiteSettingSchema = new mongoose.Schema(
 
     // ── Contact ────────────────────────────────────────────────────
     contactInfo: {
-      email: { type: String, default: "" },
-      phone: { type: String, default: "" },
-      whatsapp: { type: String, default: "" },
+      email: { type: String, default: "info@clientfilingindia.com" },
+      phone: { type: String, default: "+918101744020" },
+      whatsapp: { type: String, default: "+918101744020" },
       address: { type: String, default: "" },
-      city: { type: String, default: "" },
-      state: { type: String, default: "" },
-      pincode: { type: String, default: "" },
-      mapEmbedUrl: { type: String, default: "" },
+      city: { type: String, default: "Siliguri" },
+      state: { type: String, default: "West Bengal" },
+      pincode: { type: String, default: "735135" },
+      mapEmbedUrl: { type: String, default: "https://www.googlemap.com" },
     },
 
     // ── Social Links ───────────────────────────────────────────────
@@ -2799,7 +2798,7 @@ const websiteSettingSchema = new mongoose.Schema(
 
     // ── Maintenance ────────────────────────────────────────────────
     isMaintenanceMode: { type: Boolean, default: false },
-    maintenanceMessage: { type: String, default: "" },
+    maintenanceMessage: { type: String, default: "The Site Is Under Maintenance" },
   },
   { timestamps: true }
 );
@@ -2815,11 +2814,6 @@ websiteSettingSchema.statics.getSetting = async function () {
 
 const WebsiteSetting = mongoose.model("WebsiteSetting", websiteSettingSchema);
 export default WebsiteSetting;
-
-
-
-
-
 
 
 
@@ -2958,3 +2952,123 @@ const emailTemplateSchema = new mongoose.Schema(
 
 const EmailTemplate = mongoose.model("EmailTemplate", emailTemplateSchema);
 export default EmailTemplate;
+
+
+
+
+
+
+
+erp-backend/
+├── src/
+│   ├── config/
+│   │   ├── db.js                  # Mongoose connection
+│   │   ├── cloudinary.js          # Cloudinary SDK init
+│   │   ├── razorpay.js            # Razorpay SDK init
+│   │   ├── redis.js               # Redis client (Bull queues / rate-limit)
+│   │   └── env.js                 # Zod-validated env vars
+│   │
+│   ├── models/                    # (your existing models — unchanged)
+│   │   └── index.js
+│   │
+│   ├── controllers/
+│   │   ├── auth.controller.js
+│   │   ├── user.controller.js
+│   │   ├── role.controller.js
+│   │   ├── permission.controller.js
+│   │   ├── service.controller.js
+│   │   ├── servicePlan.controller.js
+│   │   ├── order.controller.js
+│   │   ├── payment.controller.js
+│   │   ├── task.controller.js
+│   │   ├── document.controller.js
+│   │   ├── chat.controller.js
+│   │   ├── message.controller.js
+│   │   ├── notification.controller.js
+│   │   ├── invoice.controller.js
+│   │   ├── supportTicket.controller.js
+│   │   ├── activityLog.controller.js
+│   │   ├── auditTrail.controller.js
+│   │   ├── cmsPage.controller.js
+│   │   ├── websiteSetting.controller.js
+│   │   ├── faq.controller.js
+│   │   ├── emailTemplate.controller.js
+│   │   └── dashboard.controller.js
+│   │
+│   ├── routes/
+│   │   ├── index.js               # Mounts all routers under /api/v1
+│   │   ├── auth.routes.js
+│   │   ├── user.routes.js
+│   │   ├── role.routes.js
+│   │   ├── permission.routes.js
+│   │   ├── service.routes.js
+│   │   ├── servicePlan.routes.js
+│   │   ├── order.routes.js
+│   │   ├── payment.routes.js
+│   │   ├── task.routes.js
+│   │   ├── document.routes.js
+│   │   ├── chat.routes.js
+│   │   ├── notification.routes.js
+│   │   ├── invoice.routes.js
+│   │   ├── supportTicket.routes.js
+│   │   ├── activityLog.routes.js
+│   │   ├── auditTrail.routes.js
+│   │   ├── cmsPage.routes.js
+│   │   ├── websiteSetting.routes.js
+│   │   ├── faq.routes.js
+│   │   ├── emailTemplate.routes.js
+│   │   └── dashboard.routes.js
+│   │
+│   ├── middlewares/
+│   │   ├── auth.middleware.js      # verifyToken, requireRole, requirePermission
+│   │   ├── error.middleware.js     # Global error handler + ApiError class
+│   │   ├── validate.middleware.js  # Zod schema validator wrapper
+│   │   ├── upload.middleware.js    # Multer (memory) + Cloudinary uploader
+│   │   ├── rateLimiter.middleware.js
+│   │   ├── audit.middleware.js     # Auto-writes AuditTrail on mutating routes
+│   │   └── maintenance.middleware.js
+│   │
+│   ├── services/
+│   │   ├── mail.service.js        # Nodemailer + template engine
+│   │   ├── notification.service.js # create + emit via socket
+│   │   ├── payment.service.js     # Razorpay helper (create order, verify sig)
+│   │   ├── invoice.service.js     # PDF generation (puppeteer / pdfkit)
+│   │   ├── upload.service.js      # Cloudinary upload/delete helpers
+│   │   └── activityLog.service.js # Thin wrapper to write logs
+│   │
+│   ├── validators/                # Zod schemas, one file per domain
+│   │   ├── auth.validator.js
+│   │   ├── user.validator.js
+│   │   ├── order.validator.js
+│   │   ├── payment.validator.js
+│   │   ├── task.validator.js
+│   │   ├── service.validator.js
+│   │   ├── supportTicket.validator.js
+│   │   └── ...
+│   │
+│   ├── utils/
+│   │   ├── ApiError.js            # Custom error class with statusCode
+│   │   ├── ApiResponse.js         # Standard { success, data, message } wrapper
+│   │   ├── asyncHandler.js        # try/catch wrapper for controllers
+│   │   ├── generateTokens.js      # JWT sign access + refresh tokens
+│   │   ├── paginate.js            # Reusable mongoose pagination helper
+│   │   └── pick.js                # Object key picker (for query filters)
+│   │
+│   ├── socket/
+│   │   ├── index.js               # Socket.IO server init + namespace setup
+│   │   ├── chat.socket.js         # join room, send message, typing events
+│   │   └── notification.socket.js # emit to userId room
+│   │
+│   ├── jobs/                      # Bull queue workers
+│   │   ├── mail.job.js
+│   │   ├── invoice.job.js
+│   │   └── notification.job.js
+│   │
+│   └── app.js                     # Express app (no listen here)
+│
+├── server.js                      # HTTP + Socket.IO server bootstrap
+├── .env.example
+├── .env
+├── .gitignore
+├── package.json
+└── README.md

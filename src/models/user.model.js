@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
         phone: {
             type     : String,
             required : true,
-            unique   : true,   // ← add unique so duplicate-phone is caught at DB level too
+            unique   : true,
             trim     : true,
         },
         password: {
@@ -68,6 +68,7 @@ const userSchema = new mongoose.Schema(
         lockUntil          : Date,
 
         // ── Password-reset flow ──────────────────────────────────────────
+        otp                  : String,
         passwordResetToken   : String,   // SHA-256 hash of the raw token
         passwordResetExpires : Date,     // expiry timestamp
     },
