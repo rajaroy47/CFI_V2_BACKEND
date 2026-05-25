@@ -191,4 +191,98 @@ server/
 ├── README.md                      # Project documentation
 └── ecosystem.config.js            # PM2 deployment config
 ```
+
+
+
+
+
+
+
+bolt-testt/
+├── dist/                      # Production build
+├── node_modules/              
+├── src/                       
+│   ├── api/                   
+│   │   └── index.js           # Axios config & JWT Interceptors (Complete)
+│   ├── assets/                # Static images and SVGs
+│   ├── components/            
+│   │   ├── layout/            
+│   │   │   ├── MainLayout.jsx   # Dashboard layout (Sidebar + Topbar)
+│   │   │   ├── PublicLayout.jsx # Public layout (Navbar + Footer)
+│   │   │   ├── Sidebar.jsx      
+│   │   │   └── Topbar.jsx       
+│   │   └── ui/                # Reusable Design System (Complete)
+│   │       ├── Badge.jsx
+│   │       ├── Button.jsx
+│   │       ├── Card.jsx
+│   │       ├── Feedback.jsx     
+│   │       ├── Input.jsx
+│   │       ├── Modal.jsx
+│   │       └── Table.jsx
+│   ├── hooks/                 
+│   │   ├── useDebounce.js       # (Future) For search inputs
+│   │   └── usePagination.js     # (Future) For data tables
+│   ├── pages/                 
+│   │   ├── admin/             # 👑 ADMIN PORTAL
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Employees.jsx    # Manage employee accounts
+│   │   │   ├── Tasks.jsx        # Global task assignment
+│   │   │   ├── Invoices.jsx     # Invoice generation & tracking
+│   │   │   ├── Services.jsx     # Create/edit service packages
+│   │   │   ├── Documents.jsx    # Global document repository
+│   │   │   └── Payments.jsx     # Revenue tracking
+│   │   ├── auth/              # 🔐 AUTHENTICATION
+│   │   │   ├── Login.jsx
+│   │   │   ├── ForgotPassword.jsx
+│   │   │   └── ResetPassword.jsx
+│   │   ├── client/            # 👤 CLIENT PORTAL
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Profile.jsx      # Edit business/personal details
+│   │   │   ├── Orders.jsx       # View purchased services
+│   │   │   ├── Invoices.jsx     # Pay bills & download receipts
+│   │   │   ├── Documents.jsx    # Secure file uploads
+│   │   │   └── Services.jsx     # Track active service progress
+│   │   ├── employee/          # 👨‍💼 EMPLOYEE PORTAL
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Tasks.jsx        # Assigned tasks kanban/table
+│   │   │   ├── Clients.jsx      # Assigned clients overview
+│   │   │   ├── Documents.jsx    # Review client documents
+│   │   │   └── ServiceProcessing.jsx # Update service status pipelines
+│   │   ├── public/            # 🌐 PUBLIC WEBSITE
+│   │   │   ├── Home.jsx       
+│   │   │   ├── Services.jsx   
+│   │   │   └── FAQ.jsx        
+│   │   └── super-admin/       # 🛡️ SUPER ADMIN PORTAL
+│   │       ├── Dashboard.jsx
+│   │       ├── AllUsers.jsx     # Master list (block/delete controls)
+│   │       ├── Roles.jsx        # Role management
+│   │       ├── Permissions.jsx  # Edit role permissions
+│   │       └── SystemLogs.jsx   # Audit trails
+│   ├── routes/                
+│   │   ├── guards.jsx         # RBAC logic (RequireAuth, RequireRole)
+│   │   └── index.jsx          # Complete routing configuration
+│   ├── store/                 # REDUX STATE
+│   │   ├── slices/            
+│   │   │   ├── authSlice.js         # Session & User
+│   │   │   └── boilerplateSlices.js # 9 CRUD API data slices
+│   │   └── index.js           
+│   ├── styles/                
+│   │   └── index.css          # Tailwind variables (Dark Theme)
+│   ├── utils/                 
+│   │   ├── cn.js              
+│   │   └── helpers.js         
+│   ├── App.jsx                
+│   └── main.jsx               
+├── index.html                 
+├── jsconfig.json              
+├── package-lock.json          
+├── package.json               
+├── postcss.config.js          
+└── tailwind.config.js
+
+
+
+
+
+
 ````
